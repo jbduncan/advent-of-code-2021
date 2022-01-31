@@ -1,4 +1,4 @@
-package me.jbduncan
+package me.jbduncan.adventofcode2021.day15
 
 import java.io.StringWriter
 import java.io.Writer

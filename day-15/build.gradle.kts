@@ -4,7 +4,7 @@ plugins {
     id("com.github.ben-manes.versions") version "0.41.0"
 }
 
-group = "me.jbduncan.adventofcode2021.day1"
+group = "me.jbduncan.adventofcode2021.day15"
 version = "0.1.0"
 
 repositories {
@@ -13,6 +13,9 @@ repositories {
 
 dependencies {
     implementation(libs.kotlinStdlib)
+    implementation(libs.guava)
+    implementation(libs.googleMug)
+    implementation(libs.jodaCollect)
 
     testImplementation(libs.kotestRunnerJunit5)
     testImplementation(libs.kotestAssertions)

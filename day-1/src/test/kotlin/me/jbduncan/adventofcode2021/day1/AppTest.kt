@@ -1,4 +1,4 @@
-package me.jbduncan
+package me.jbduncan.adventofcode2021.day1
 
 import io.kotest.core.TestConfiguration
 import io.kotest.core.spec.style.BehaviorSpec

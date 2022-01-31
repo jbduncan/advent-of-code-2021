@@ -2,5 +2,9 @@
 kotest = "5.1.0"
 
 [libraries]
-kotest-core = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
-kotest-assertions = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
+googleMug = { module = "com.google.mug:mug", version = "5.9" }
+guava = { module = "com.google.guava:guava", version = "31.0.1-jre" }
+jodaCollect = { module = "org.joda:joda-collect", version = "1.0.1" }
+kotestRunnerJunit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
+kotestAssertions = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
+kotlinStdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8" }
