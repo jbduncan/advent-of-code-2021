@@ -10,7 +10,7 @@ fun main(args: Array<String>) {
   exitProcess(execute(args, System.out.bufferedWriter(UTF_8), System.err.bufferedWriter(UTF_8)))
 }
 
-internal fun <T> execute(args: Array<T>, out: Writer, err: Writer): Int {
+internal fun execute(args: Array<out Any>, out: Writer, err: Writer): Int {
   if (args.isEmpty()) {
     err.printLine("Usage: day-1 <input-file> [--part-2]")
     return 1
