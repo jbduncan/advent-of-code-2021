@@ -56,6 +56,7 @@ tasks {
 
 spotless {
     kotlin {
-        ktfmt("0.30").googleStyle()
+        toggleOffOn()
+        ktfmt("0.30")
     }
 }

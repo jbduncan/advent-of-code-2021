@@ -6,6 +6,7 @@ import com.google.mu.util.stream.BiStream.biStream
 import java.io.Writer
 import java.nio.file.Path
 import kotlin.io.path.readLines
+import kotlin.streams.asSequence
 import kotlin.system.exitProcess
 import kotlin.text.Charsets.UTF_8
 import org.joda.collect.grid.DenseGrid
@@ -25,26 +26,26 @@ internal fun execute(args: Array<out Any>, out: Writer, err: Writer): Int {
   val part2 = args.size >= 2 && args[1] == "--part-2"
 
   val grid =
-    if (!part2) {
-      toGrid(inputFile.readLines(UTF_8))
-    } else {
-      to5Times5ExpandedGrid(toGrid(inputFile.readLines(UTF_8)))
-    }
+      if (!part2) {
+        toGrid(inputFile.readLines(UTF_8))
+      } else {
+        to5Times5ExpandedGrid(toGrid(inputFile.readLines(UTF_8)))
+      }
 
   val start = grid.cell(0, 0)
   val end = grid.cell(grid.rowCount() - 1, grid.columnCount() - 1)
 
   val safestPathStopwatch = Stopwatch.createStarted()
+  // @spotless:off
   val safestPath =
-    shortestPathsFrom(start) { cell ->
-        biStream(grid.neighborsOf(cell)) { neighbor -> neighbor.value.toDouble() }
-      }
-      .filter { path -> path.to() == end }
-      .findFirst()
-      .orElseThrow()
+      shortestPathsFrom(start) { cell ->
+            biStream(grid.neighborsOf(cell)) { neighbor -> neighbor.value.toDouble() }
+          }
+          .asSequence()
+          .first { path -> path.to() == end }
+  // @spotless:on
   err.printLine(
-    "DEBUG: Safest path: calculation time: ${safestPathStopwatch.elapsed().toMillis()}ms"
-  )
+      "DEBUG: Safest path: calculation time: ${safestPathStopwatch.elapsed().toMillis()}ms")
 
   val lowestTotalRisk = safestPath.distance().toInt()
 
@@ -76,10 +77,7 @@ private fun to5Times5ExpandedGrid(grid: Grid<Int>): ImmutableGrid<Int> {
         for (columnIndex in 0 until grid.columnCount()) {
           val value = grid.get(rowIndex, columnIndex).incBy(i + j)
           result.put(
-            (i * grid.rowCount()) + rowIndex,
-            (j * grid.columnCount()) + columnIndex,
-            value
-          )
+              (i * grid.rowCount()) + rowIndex, (j * grid.columnCount()) + columnIndex, value)
         }
       }
     }
@@ -100,22 +98,22 @@ private fun Int.incBy(value: Int): Int {
 }
 
 private fun <V> Grid<V>.neighborsOf(cell: Grid.Cell<V>): Set<Grid.Cell<V>> {
-  val result = mutableSetOf<Grid.Cell<V>>()
-  val up = cell.row - 1
-  if (up >= 0) {
-    result.add(cell(up, cell.column))
+  return buildSet {
+    val up = cell.row - 1
+    if (up >= 0) {
+      add(cell(up, cell.column))
+    }
+    val right = cell.column + 1
+    if (right < columnCount()) {
+      add(cell(cell.row, right))
+    }
+    val down = cell.row + 1
+    if (down < rowCount()) {
+      add(cell(down, cell.column))
+    }
+    val left = cell.column - 1
+    if (left >= 0) {
+      add(cell(cell.row, left))
+    }
   }
-  val right = cell.column + 1
-  if (right < columnCount()) {
-    result.add(cell(cell.row, right))
-  }
-  val down = cell.row + 1
-  if (down < rowCount()) {
-    result.add(cell(down, cell.column))
-  }
-  val left = cell.column - 1
-  if (left >= 0) {
-    result.add(cell(cell.row, left))
-  }
-  return result
 }

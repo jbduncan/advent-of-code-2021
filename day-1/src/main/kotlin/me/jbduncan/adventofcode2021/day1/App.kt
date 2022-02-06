@@ -19,13 +19,13 @@ internal fun execute(args: Array<out Any>, out: Writer, err: Writer): Int {
   val part2 = args.size >= 2 && args[1].toString() == "--part-2"
 
   val result =
-    inputFile.useLines(UTF_8) { depths ->
-      depths
-        .map(String::toInt)
-        .windowed(size = if (part2) 3 else 1, transform = List<Int>::sum)
-        .zipWithNext { previous, current -> if (previous < current) 1 else 0 }
-        .sum()
-    }
+      inputFile.useLines(UTF_8) { depths ->
+        depths
+            .map(String::toInt)
+            .windowed(size = if (part2) 3 else 1, transform = List<Int>::sum)
+            .zipWithNext { previous, current -> if (previous < current) 1 else 0 }
+            .sum()
+      }
 
   out.printLine(result)
 

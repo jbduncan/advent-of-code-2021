@@ -53,6 +53,6 @@ tasks {
 
 spotless {
     kotlin {
-        ktfmt("0.30").googleStyle()
+        ktfmt("0.30")
     }
 }

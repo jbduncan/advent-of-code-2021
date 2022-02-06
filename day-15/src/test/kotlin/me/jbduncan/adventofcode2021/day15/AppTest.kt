@@ -8,65 +8,65 @@ import java.nio.file.Path
 import kotlin.io.path.toPath
 
 class AppTest :
-  BehaviorSpec({
-    Given("everyone's matrix of risk levels in the cavern") {
-      When("running the app") {
-        Then("it reports 40 as the minimum total risk") {
-          val out = CharSequenceWriter()
-          val err = CharSequenceWriter()
+    BehaviorSpec({
+      Given("everyone's matrix of risk levels in the cavern") {
+        When("running the app") {
+          Then("it reports 40 as the minimum total risk") {
+            val out = CharSequenceWriter()
+            val err = CharSequenceWriter()
 
-          execute(arrayOf(everyonesInputFile()), out, err)
+            execute(arrayOf(everyonesInputFile()), out, err)
 
-          println(err.trim())
-          out.trim() shouldBe "40"
+            println(err.trim())
+            out.trim() shouldBe "40"
+          }
+        }
+
+        When("running the app with flag --part-2") {
+          Then("it reports 315 as the minimum total risk") {
+            val out = CharSequenceWriter()
+            val err = CharSequenceWriter()
+
+            execute(arrayOf(everyonesInputFile(), "--part-2"), out, err)
+
+            println(err.trim())
+            out.trim() shouldBe "315"
+          }
         }
       }
 
-      When("running the app with flag --part-2") {
-        Then("it reports 315 as the minimum total risk") {
-          val out = CharSequenceWriter()
-          val err = CharSequenceWriter()
+      Given("my matrix of risk levels in the cavern") {
+        When("running the app") {
+          Then("it reports 656 as the minimum total risk") {
+            val out = CharSequenceWriter()
+            val err = CharSequenceWriter()
 
-          execute(arrayOf(everyonesInputFile(), "--part-2"), out, err)
+            execute(arrayOf(myInputFile()), out, err)
 
-          println(err.trim())
-          out.trim() shouldBe "315"
+            println(err.trim())
+            out.trim() shouldBe "656"
+          }
+        }
+
+        When("running the app with flag --part-2") {
+          Then("it reports 2979 as the minimum total risk") {
+            val out = CharSequenceWriter()
+            val err = CharSequenceWriter()
+
+            execute(arrayOf(myInputFile(), "--part-2"), out, err)
+
+            println(err.trim())
+            out.trim() shouldBe "2979"
+          }
         }
       }
-    }
-
-    Given("my matrix of risk levels in the cavern") {
-      When("running the app") {
-        Then("it reports 656 as the minimum total risk") {
-          val out = CharSequenceWriter()
-          val err = CharSequenceWriter()
-
-          execute(arrayOf(myInputFile()), out, err)
-
-          println(err.trim())
-          out.trim() shouldBe "656"
-        }
-      }
-
-      When("running the app with flag --part-2") {
-        Then("it reports 2979 as the minimum total risk") {
-          val out = CharSequenceWriter()
-          val err = CharSequenceWriter()
-
-          execute(arrayOf(myInputFile(), "--part-2"), out, err)
-
-          println(err.trim())
-          out.trim() shouldBe "2979"
-        }
-      }
-    }
-  })
+    })
 
 private fun TestConfiguration.everyonesInputFile(): Path {
   return tempfile()
-    .apply {
-      writeText(
-        """
+      .apply {
+        writeText(
+            """
           1163751742
           1381373672
           2136511328
@@ -77,21 +77,19 @@ private fun TestConfiguration.everyonesInputFile(): Path {
           3125421639
           1293138521
           2311944581
-        """.trimIndent()
-      )
-    }
-    .toPath()
+        """.trimIndent())
+      }
+      .toPath()
 }
 
 private fun myInputFile() = resource("/input.txt")
 
 fun resource(resourcePath: String): Path {
   return {}.javaClass //
-    .getResource(resourcePath)
-    ?.toURI()
-    ?.toPath()
-    ?: throw IllegalArgumentException(
-      "Path '${resourcePath}' doesn't exist in the resources folder. " +
-        "Did you forget to prefix the path with a '/'?"
-    )
+      .getResource(resourcePath)
+      ?.toURI()
+      ?.toPath()
+      ?: throw IllegalArgumentException(
+          "Path '${resourcePath}' doesn't exist in the resources folder. " +
+              "Did you forget to prefix the path with a '/'?")
 }

@@ -8,68 +8,68 @@ import java.nio.file.Path
 import kotlin.io.path.toPath
 
 class AppTest :
-  BehaviorSpec({
-    Given("an empty list of depths") {
-      When("running the app") {
-        Then("it reports 0 increases") {
-          val out = CharSequenceWriter()
-          val err = CharSequenceWriter()
+    BehaviorSpec({
+      Given("an empty list of depths") {
+        When("running the app") {
+          Then("it reports 0 increases") {
+            val out = CharSequenceWriter()
+            val err = CharSequenceWriter()
 
-          execute(arrayOf(emptyInputFile()), out, err)
+            execute(arrayOf(emptyInputFile()), out, err)
 
-          out.trim() shouldBe "0"
-        }
-      }
-    }
-
-    Given("everyone's list of depths") {
-      When("running the app") {
-        Then("it reports 7 increases") {
-          val out = CharSequenceWriter()
-          val err = CharSequenceWriter()
-
-          execute(arrayOf(everyonesInputFile()), out, err)
-
-          out.trim() shouldBe "7"
+            out.trim() shouldBe "0"
+          }
         }
       }
 
-      When("running the app with flag --part-2") {
-        Then("it reports 5 increases") {
-          val out = CharSequenceWriter()
-          val err = CharSequenceWriter()
+      Given("everyone's list of depths") {
+        When("running the app") {
+          Then("it reports 7 increases") {
+            val out = CharSequenceWriter()
+            val err = CharSequenceWriter()
 
-          execute(arrayOf(everyonesInputFile(), "--part-2"), out, err)
+            execute(arrayOf(everyonesInputFile()), out, err)
 
-          out.trim() shouldBe "5"
+            out.trim() shouldBe "7"
+          }
+        }
+
+        When("running the app with flag --part-2") {
+          Then("it reports 5 increases") {
+            val out = CharSequenceWriter()
+            val err = CharSequenceWriter()
+
+            execute(arrayOf(everyonesInputFile(), "--part-2"), out, err)
+
+            out.trim() shouldBe "5"
+          }
         }
       }
-    }
 
-    Given("my list of depths") {
-      When("running the app") {
-        Then("it reports 1466 increases") {
-          val out = CharSequenceWriter()
-          val err = CharSequenceWriter()
+      Given("my list of depths") {
+        When("running the app") {
+          Then("it reports 1466 increases") {
+            val out = CharSequenceWriter()
+            val err = CharSequenceWriter()
 
-          execute(arrayOf(myInputFile()), out, err)
+            execute(arrayOf(myInputFile()), out, err)
 
-          out.trim() shouldBe "1466"
+            out.trim() shouldBe "1466"
+          }
+        }
+
+        When("running the app with flag --part-2") {
+          Then("it reports 1491 increases") {
+            val out = CharSequenceWriter()
+            val err = CharSequenceWriter()
+
+            execute(arrayOf(myInputFile(), "--part-2"), out, err)
+
+            out.trim() shouldBe "1491"
+          }
         }
       }
-
-      When("running the app with flag --part-2") {
-        Then("it reports 1491 increases") {
-          val out = CharSequenceWriter()
-          val err = CharSequenceWriter()
-
-          execute(arrayOf(myInputFile(), "--part-2"), out, err)
-
-          out.trim() shouldBe "1491"
-        }
-      }
-    }
-  })
+    })
 
 private fun TestConfiguration.emptyInputFile(): Path {
   return tempfile().toPath()
@@ -77,9 +77,9 @@ private fun TestConfiguration.emptyInputFile(): Path {
 
 private fun TestConfiguration.everyonesInputFile(): Path {
   return tempfile()
-    .apply {
-      writeText(
-        """
+      .apply {
+        writeText(
+            """
           199
           200
           208
@@ -90,21 +90,19 @@ private fun TestConfiguration.everyonesInputFile(): Path {
           269
           260
           263
-        """.trimIndent()
-      )
-    }
-    .toPath()
+        """.trimIndent())
+      }
+      .toPath()
 }
 
 private fun myInputFile() = resource("/input.txt")
 
 fun resource(resourcePath: String): Path {
   return {}.javaClass //
-    .getResource(resourcePath)
-    ?.toURI()
-    ?.toPath()
-    ?: throw IllegalArgumentException(
-      "Path '${resourcePath}' doesn't exist in the resources folder. " +
-        "Did you forget to prefix the path with a '/'?"
-    )
+      .getResource(resourcePath)
+      ?.toURI()
+      ?.toPath()
+      ?: throw IllegalArgumentException(
+          "Path '${resourcePath}' doesn't exist in the resources folder. " +
+              "Did you forget to prefix the path with a '/'?")
 }
