@@ -6,6 +6,7 @@ import io.kotest.engine.spec.tempfile
 import io.kotest.matchers.shouldBe
 import java.nio.file.Path
 import kotlin.io.path.toPath
+import me.jbduncan.adventofcode2021.testlib.CharSequenceWriter
 
 class AppTest :
     BehaviorSpec({
@@ -80,17 +81,17 @@ private fun TestConfiguration.everyonesInputFile(): Path {
       .apply {
         writeText(
             """
-          199
-          200
-          208
-          210
-          200
-          207
-          240
-          269
-          260
-          263
-        """.trimIndent())
+            199
+            200
+            208
+            210
+            200
+            207
+            240
+            269
+            260
+            263
+            """.trimIndent())
       }
       .toPath()
 }

@@ -1,11 +1,11 @@
-package me.jbduncan.adventofcode2021.day1
+package me.jbduncan.adventofcode2021.testlib
 
 import java.io.StringWriter
 import java.io.Writer
 
 class CharSequenceWriter : Writer(), CharSequence {
 
-  private val delegateWriter: StringWriter = StringWriter()
+  private val delegateWriter = StringWriter()
 
   override fun close() {
     delegateWriter.close()
