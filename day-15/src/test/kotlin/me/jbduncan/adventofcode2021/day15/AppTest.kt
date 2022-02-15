@@ -5,7 +5,8 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.engine.spec.tempfile
 import io.kotest.matchers.shouldBe
 import java.nio.file.Path
-import kotlin.io.path.toPath
+import me.jbduncan.adventofcode2021.testlib.CharSequenceWriter
+import me.jbduncan.adventofcode2021.testlib.resource
 
 class AppTest :
     BehaviorSpec({
@@ -83,13 +84,3 @@ private fun TestConfiguration.everyonesInputFile(): Path {
 }
 
 private fun myInputFile() = resource("/input.txt")
-
-fun resource(resourcePath: String): Path {
-  return {}.javaClass //
-      .getResource(resourcePath)
-      ?.toURI()
-      ?.toPath()
-      ?: throw IllegalArgumentException(
-          "Path '${resourcePath}' doesn't exist in the resources folder. " +
-              "Did you forget to prefix the path with a '/'?")
-}

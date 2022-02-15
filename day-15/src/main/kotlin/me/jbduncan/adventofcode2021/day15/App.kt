@@ -9,6 +9,7 @@ import kotlin.io.path.readLines
 import kotlin.streams.asSequence
 import kotlin.system.exitProcess
 import kotlin.text.Charsets.UTF_8
+import me.jbduncan.adventofcode2021.lib.printLine
 import org.joda.collect.grid.DenseGrid
 import org.joda.collect.grid.Grid
 import org.joda.collect.grid.ImmutableGrid
@@ -48,41 +49,36 @@ internal fun execute(args: Array<out Any>, out: Writer, err: Writer): Int {
       "DEBUG: Safest path: calculation time: ${safestPathStopwatch.elapsed().toMillis()}ms")
 
   val lowestTotalRisk = safestPath.distance().toInt()
-
   out.printLine(lowestTotalRisk)
 
   return 0
 }
 
-private fun Writer.printLine(obj: Any) {
-  appendLine(obj.toString())
-  flush()
-}
-
 private fun toGrid(lines: List<String>): ImmutableGrid<Int> {
   val result = DenseGrid.create<Int>(lines.size, lines[0].length)
-  for (row in (0 until result.rowCount())) {
-    for (column in (0 until result.columnCount())) {
-      result.put(row, column, lines[row][column].digitToInt())
-    }
-  }
+  result.forEach { row, column -> result.put(row, column, lines[row][column].digitToInt()) }
   return ImmutableGrid.copyOf(result)
 }
 
 private fun to5Times5ExpandedGrid(grid: Grid<Int>): ImmutableGrid<Int> {
   val result = DenseGrid.create<Int>(grid.rowCount() * 5, grid.columnCount() * 5)
-  for (i in 0..4) {
-    for (j in 0..4) {
-      for (rowIndex in 0 until grid.rowCount()) {
-        for (columnIndex in 0 until grid.columnCount()) {
-          val value = grid.get(rowIndex, columnIndex).incBy(i + j)
-          result.put(
-              (i * grid.rowCount()) + rowIndex, (j * grid.columnCount()) + columnIndex, value)
-        }
+  repeat(5) { i ->
+    repeat(5) { j ->
+      grid.forEach { row, column ->
+        val value = grid.get(row, column).incBy(i + j)
+        result.put((i * grid.rowCount()) + row, (j * grid.columnCount()) + column, value)
       }
     }
   }
   return ImmutableGrid.copyOf(result)
+}
+
+private inline fun <V> Grid<V>.forEach(action: (row: Int, column: Int) -> Unit) {
+  repeat(rowCount()) { row ->
+    repeat(columnCount()) { column -> //
+      action(row, column)
+    }
+  }
 }
 
 private fun Int.incBy(value: Int): Int {

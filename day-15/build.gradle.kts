@@ -16,6 +16,7 @@ dependencies {
   implementation(libs.guava)
   implementation(libs.googleMug)
   implementation(libs.jodaCollect)
+  implementation(project(":common"))
 
   testImplementation(libs.kotestRunnerJunit5)
   testImplementation(libs.kotestAssertions)
@@ -58,5 +59,6 @@ tasks {
 spotless {
   kotlin {
     ktfmt("0.31")
+    toggleOffOn()
   }
 }

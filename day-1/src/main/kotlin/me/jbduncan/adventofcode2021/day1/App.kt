@@ -5,6 +5,7 @@ import java.nio.file.Path
 import kotlin.io.path.useLines
 import kotlin.system.exitProcess
 import kotlin.text.Charsets.UTF_8
+import me.jbduncan.adventofcode2021.lib.printLine
 
 fun main(args: Array<String>) {
   exitProcess(execute(args, System.out.bufferedWriter(UTF_8), System.err.bufferedWriter(UTF_8)))
@@ -19,7 +20,7 @@ internal fun execute(args: Array<out Any>, out: Writer, err: Writer): Int {
   val part2 = args.size >= 2 && args[1].toString() == "--part-2"
 
   val result =
-      inputFile.useLines(UTF_8) { depths ->
+      inputFile.useLines(UTF_8) { depths: Sequence<String> ->
         depths
             .map(String::toInt)
             .windowed(size = if (part2) 3 else 1, transform = List<Int>::sum)
@@ -30,9 +31,4 @@ internal fun execute(args: Array<out Any>, out: Writer, err: Writer): Int {
   out.printLine(result)
 
   return 0
-}
-
-private fun Writer.printLine(obj: Any) {
-  appendLine(obj.toString())
-  flush()
 }

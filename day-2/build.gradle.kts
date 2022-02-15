@@ -4,8 +4,12 @@ plugins {
   id("com.github.ben-manes.versions") version "0.42.0"
 }
 
-group = "me.jbduncan.adventofcode2021.day1"
+group = "me.jbduncan.adventofcode2021.day2"
 version = "0.1.0"
+
+repositories {
+  mavenCentral()
+}
 
 repositories {
   mavenCentral()
