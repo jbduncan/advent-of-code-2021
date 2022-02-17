@@ -40,9 +40,15 @@ private fun getHorizontalPositionAndDepth(inputFile: Path): HorizontalPositionAn
   inputFile.forEachLine { instruction ->
     val (direction, distance) = instruction.split(' ', limit = 2)
     when (direction) {
-      "forward" -> horizontalPosition += distance.toInt()
-      "down" -> depth += distance.toInt()
-      "up" -> depth -= distance.toInt()
+      "forward" -> {
+        horizontalPosition += distance.toInt()
+      }
+      "down" -> {
+        depth += distance.toInt()
+      }
+      "up" -> {
+        depth -= distance.toInt()
+      }
     }
   }
   return HorizontalPositionAndDepth(horizontalPosition, depth)
@@ -59,8 +65,12 @@ private fun getHorizontalPositionAndDepthViaAiming(inputFile: Path): HorizontalP
         horizontalPosition += distance.toInt()
         depth += distance.toInt() * aim
       }
-      "down" -> aim += distance.toInt()
-      "up" -> aim -= distance.toInt()
+      "down" -> {
+        aim += distance.toInt()
+      }
+      "up" -> {
+        aim -= distance.toInt()
+      }
     }
   }
   return HorizontalPositionAndDepth(horizontalPosition, depth)

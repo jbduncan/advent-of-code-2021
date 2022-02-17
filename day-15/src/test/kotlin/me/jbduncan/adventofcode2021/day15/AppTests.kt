@@ -1,4 +1,4 @@
-package me.jbduncan.adventofcode2021.day1
+package me.jbduncan.adventofcode2021.day15
 
 import io.kotest.core.TestConfiguration
 import io.kotest.core.spec.style.BehaviorSpec
@@ -8,89 +8,76 @@ import java.nio.file.Path
 import me.jbduncan.adventofcode2021.testlib.CharSequenceWriter
 import me.jbduncan.adventofcode2021.testlib.resource
 
-class AppTest :
+class AppTests :
     BehaviorSpec({
-      Given("an empty list of depths") {
+      Given("everyone's matrix of risk levels in the cavern") {
         When("running the app") {
-          Then("it reports 0 increases") {
-            val out = CharSequenceWriter()
-            val err = CharSequenceWriter()
-
-            execute(arrayOf(emptyInputFile()), out, err)
-
-            out.trim() shouldBe "0"
-          }
-        }
-      }
-
-      Given("everyone's list of depths") {
-        When("running the app") {
-          Then("it reports 7 increases") {
+          Then("it reports 40 as the minimum total risk") {
             val out = CharSequenceWriter()
             val err = CharSequenceWriter()
 
             execute(arrayOf(everyonesInputFile()), out, err)
 
-            out.trim() shouldBe "7"
+            println(err.trim())
+            out.trim() shouldBe "40"
           }
         }
 
         When("running the app with flag --part-2") {
-          Then("it reports 5 increases") {
+          Then("it reports 315 as the minimum total risk") {
             val out = CharSequenceWriter()
             val err = CharSequenceWriter()
 
             execute(arrayOf(everyonesInputFile(), "--part-2"), out, err)
 
-            out.trim() shouldBe "5"
+            println(err.trim())
+            out.trim() shouldBe "315"
           }
         }
       }
 
-      Given("my list of depths") {
+      Given("my matrix of risk levels in the cavern") {
         When("running the app") {
-          Then("it reports 1466 increases") {
+          Then("it reports 656 as the minimum total risk") {
             val out = CharSequenceWriter()
             val err = CharSequenceWriter()
 
             execute(arrayOf(myInputFile()), out, err)
 
-            out.trim() shouldBe "1466"
+            println(err.trim())
+            out.trim() shouldBe "656"
           }
         }
 
         When("running the app with flag --part-2") {
-          Then("it reports 1491 increases") {
+          Then("it reports 2979 as the minimum total risk") {
             val out = CharSequenceWriter()
             val err = CharSequenceWriter()
 
             execute(arrayOf(myInputFile(), "--part-2"), out, err)
 
-            out.trim() shouldBe "1491"
+            println(err.trim())
+            out.trim() shouldBe "2979"
           }
         }
       }
     })
-
-private fun TestConfiguration.emptyInputFile(): Path {
-  return tempfile().toPath()
-}
 
 private fun TestConfiguration.everyonesInputFile(): Path {
   return tempfile()
       .apply {
         writeText(
             """
-            199
-            200
-            208
-            210
-            200
-            207
-            240
-            269
-            260
-            263
+            1163751742
+            1381373672
+            2136511328
+            3694931569
+            7463417111
+            1319128137
+            1359912421
+            3125421639
+            1293138521
+            2311944581
             """.trimIndent())
       }
       .toPath()

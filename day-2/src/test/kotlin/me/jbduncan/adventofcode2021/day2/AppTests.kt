@@ -10,7 +10,7 @@ import java.nio.file.Path
 import me.jbduncan.adventofcode2021.testlib.CharSequenceWriter
 import me.jbduncan.adventofcode2021.testlib.resource
 
-class AppTest :
+class AppTests :
     BehaviorSpec({
       Given("everyone's planned course") {
         When("running the app") {
